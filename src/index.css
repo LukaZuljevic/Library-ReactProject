@@ -1,0 +1,15 @@
+@import "./styles/bookForm.css";
+@import "./styles/header.css";
+@import "./styles/bookList.css";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: rgb(209, 196, 137);
+  display: flex;
+  flex-direction: column;
+}
