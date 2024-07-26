@@ -4,10 +4,10 @@ const allBooks = [
   {
     id: uuidv4(),
     bookName: "Biblija",
-    bookAuthor: "Isus",
+    bookAuthor: "Više",
     bookYear: 0,
     bookUrl: "./src/assets/biblija.jpg",
-    bookGenre: "Drama",
+    bookGenre: "Religijska",
     bookCopies: 10,
   },
 
@@ -18,7 +18,17 @@ const allBooks = [
     bookYear: 1989,
     bookUrl: "./src/assets/werther.jpg",
     bookGenre: "Roman",
-    bookCopies: 0,
+    bookCopies: 1,
+  },
+
+  {
+    id: uuidv4(),
+    bookName: "Ilijada",
+    bookAuthor: "Homer",
+    bookYear: 1572,
+    bookUrl: "./src/assets/ilijada.jpg",
+    bookGenre: "Drama",
+    bookCopies: 2,
   },
 ];
 

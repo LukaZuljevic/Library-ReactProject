@@ -1,6 +1,7 @@
 @import "./styles/bookForm.css";
 @import "./styles/header.css";
 @import "./styles/bookList.css";
+@import "./styles/bookFilter.css";
 
 * {
   box-sizing: border-box;

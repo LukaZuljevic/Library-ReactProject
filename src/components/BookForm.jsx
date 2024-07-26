@@ -9,6 +9,8 @@ function BookForm({ addBooks }) {
   const [bookGenre, setBookGenre] = useState("");
   const [bookCopies, setBookCopies] = useState(1);
 
+
+  //adding book on submit
   function addBook(event) {
     event.preventDefault(); // Prevents form submission
 
@@ -101,6 +103,9 @@ function BookForm({ addBooks }) {
               <option>Drama</option>
               <option>Roman</option>
               <option>Biografija</option>
+              <option>Triler</option>
+              <option>Komedija</option>
+              <option>Religijska</option>
             </select>
           </datalist>
         </div>

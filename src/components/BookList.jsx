@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function BookList({ books, setBooks }) {
+function BookList({ books, setBooks, filter }) {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState(books);
 
   function handleReturnButton(bookId) {
     const bookToReturn = borrowedBooks.find(
       (borrowedBook) => borrowedBook.id === bookId
     );
 
+    //if you have this book borrowed it will return and update borrowed books list, if you don't have
+    //this book borrowed it will break out of function
     if (bookToReturn) {
       const newBorrowedBooks = borrowedBooks.filter((borrowedBook, index) => {
         return (
@@ -32,6 +35,7 @@ function BookList({ books, setBooks }) {
   }
 
   function handleBorrowButton(bookId) {
+    //checks if book is available(if copies > 0) and adds to borrowes books list if it is
     const updatedBooks = books.map((book) => {
       if (bookId === book.id && book.bookCopies > 0) {
         alert(`Book ${book.bookName} successfully borrowed!`);
@@ -40,6 +44,7 @@ function BookList({ books, setBooks }) {
       } else if (bookId === book.id && book.bookCopies === 0) {
         alert("There is no copies of that book left in the library");
       }
+
       return book;
     });
 
@@ -56,13 +61,24 @@ function BookList({ books, setBooks }) {
     });
   }
 
+  //filtering books
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      //second filter is a prop from app.jsx, don't confuse it with method filter
+      const newFilteredBooks = books.filter((book) =>
+        book.bookName.toLowerCase().includes(filter.toLowerCase())
+      );
+      setFilteredBooks(newFilteredBooks);
+    }, 400);
+  }, [filter, books]);
+
   return (
     <div className="container">
       <button onClick={ShowBorrowedBooks} className="check-button">
         Check borrowed books
       </button>
       <ul>
-        {books.map((book) => {
+        {filteredBooks.map((book) => {
           return (
             <li key={book.id}>
               <div className="book-image">
