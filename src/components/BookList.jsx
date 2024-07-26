@@ -1,19 +1,41 @@
+import React, { useState } from "react";
+
 function BookList({ books, setBooks }) {
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+
   function handleReturnButton(bookId) {
-    const updatedBook = books.map((book) => {
+    const bookToReturn = borrowedBooks.find(
+      (borrowedBook) => borrowedBook.id === bookId
+    );
+
+    if (bookToReturn) {
+      const newBorrowedBooks = borrowedBooks.filter((borrowedBook, index) => {
+        return (
+          borrowedBook.id !== bookId ||
+          borrowedBooks.findIndex((book) => book.id === bookId) !== index
+        );
+      });
+      setBorrowedBooks(newBorrowedBooks);
+    } else {
+      alert("You have returned all copies of that book!");
+      return;
+    }
+
+    const updatedBooks = books.map((book) => {
       if (book.id === bookId) {
         return { ...book, bookCopies: book.bookCopies + 1 };
       }
       return book;
     });
 
-    setBooks(updatedBook);
+    setBooks(updatedBooks);
   }
 
   function handleBorrowButton(bookId) {
-    const updatedBook = books.map((book) => {
+    const updatedBooks = books.map((book) => {
       if (bookId === book.id && book.bookCopies > 0) {
         alert(`Book ${book.bookName} successfully borrowed!`);
+        setBorrowedBooks((prevBorrowedBooks) => [...prevBorrowedBooks, book]);
         return { ...book, bookCopies: book.bookCopies - 1 };
       } else if (bookId === book.id && book.bookCopies === 0) {
         alert("There is no copies of that book left in the library");
@@ -21,10 +43,24 @@ function BookList({ books, setBooks }) {
       return book;
     });
 
-    setBooks(updatedBook);
+    setBooks(updatedBooks);
   }
+
+  function ShowBorrowedBooks() {
+    if (borrowedBooks.length === 0) {
+      alert("You do not have any borrowed books");
+    }
+
+    borrowedBooks.forEach((book) => {
+      alert(`${book.bookName}`);
+    });
+  }
+
   return (
-    <>
+    <div className="container">
+      <button onClick={ShowBorrowedBooks} className="check-button">
+        Check borrowed books
+      </button>
       <ul>
         {books.map((book) => {
           return (
@@ -67,7 +103,7 @@ function BookList({ books, setBooks }) {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 }
 
